@@ -137,5 +137,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://chat-app-37v9.onrender.com",  # ✅ your render app domain
+]
+
+
+
 
 
