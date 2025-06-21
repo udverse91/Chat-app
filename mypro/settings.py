@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://chat-app-37v9.onrender.com",  # ✅ your render app domain
+    "https://chat-app-4-vkmj.onrender.com",  # ✅ your render app domain
 ]
 
 
