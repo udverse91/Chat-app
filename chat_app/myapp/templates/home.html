@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+  <header class="hero" style="text-align:center; padding:4rem 0;">
+    <h1 class="hero-text" style="font-size:2.5rem; opacity: 0; transition: opacity 1s;">
+      Welcome to the Chat App
+    </h1>
+    <p class="hero-subtext">Secure. Real-time. Social.</p>
+    <a href="{% url 'chat-room' %}" class="btn" style="
+         display:inline-block; margin-top:1.5rem; padding:0.75rem 1.5rem;
+         background: linear-gradient(to right, #6a11cb, #2575fc);
+         color:#fff; border:none; border-radius:5px; text-decoration:none;
+         font-weight:bold;">
+      Enter Chat Room
+    </a>
+  </header>
+
+  <section class="features" style="
+      display:flex; flex-wrap:wrap; gap:1rem;
+      justify-content:center; margin-top:2rem;">
+    <div class="feature" style="
+         flex:1 1 250px; padding:1rem;
+         background: rgba(255,255,255,0.2);
+         backdrop-filter: blur(8px);
+         border-radius:10px; text-align:center;
+         transition: transform 0.3s;">
+      <i class="fa fa-lock" style="font-size:2rem; margin-bottom:0.5rem;"></i>
+      <h3>Secure</h3>
+      <p>End-to-end encryption for private messaging.</p>
+    </div>
+    <div class="feature" style="
+         flex:1 1 250px; padding:1rem;
+         background: rgba(255,255,255,0.2);
+         backdrop-filter: blur(8px);
+         border-radius:10px; text-align:center;
+         transition: transform 0.3s;">
+      <i class="fa fa-bolt" style="font-size:2rem; margin-bottom:0.5rem;"></i>
+      <h3>Real-Time</h3>
+      <p>Instant updates via WebSockets.</p>
+    </div>
+    <div class="feature" style="
+         flex:1 1 250px; padding:1rem;
+         background: rgba(255,255,255,0.2);
+         backdrop-filter: blur(8px);
+         border-radius:10px; text-align:center;
+         transition: transform 0.3s;">
+      <i class="fa fa-users" style="font-size:2rem; margin-bottom:0.5rem;"></i>
+      <h3>Group Chat</h3>
+      <p>Create rooms and chat with friends.</p>
+    </div>
+  </section>
+
+  <script>
+    // Fade in the hero heading on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const heroText = document.querySelector('.hero-text');
+      setTimeout(() => { heroText.style.opacity = 1; }, 100);
+    });
+    // Add hover lift to feature cards
+    document.querySelectorAll('.feature').forEach(el => {
+      el.addEventListener('mouseenter', () => { el.style.transform = 'translateY(-5px)'; });
+      el.addEventListener('mouseleave', () => { el.style.transform = 'translateY(0)'; });
+    });
+  </script>
+{% endblock %}

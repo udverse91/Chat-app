@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #6a11cb;
+        --secondary: #2575fc;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --success: #00c9a7;
+        --card-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    .chat-wrapper {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .chat-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        max-width: 450px;
+        overflow: hidden;
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        z-index: 10;
+    }
+
+    .chat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: white;
+        padding: 25px;
+        text-align: center;
+        border-bottom: none;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .form-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+
+    .form-control {
+        padding-left: 45px;
+        height: 50px;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(106, 17, 203, 0.25);
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--dark);
+    }
+
+    .btn-submit {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        border: none;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        height: 50px;
+        color: white;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(to right, #5a0db4, #1c67e0);
+        transform: translateY(-2px);
+    }
+
+    .features {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 25px;
+        text-align: center;
+    }
+
+    .feature-item {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .feature-icon {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 8px;
+    }
+
+    .feature-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .chat-bubble {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--success), #00d2a9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        animation: float 6s ease-in-out infinite;
+        z-index: 1;
+    }
+
+    .bubble-1 {
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .bubble-2 {
+        top: 20%;
+        right: 15%;
+        animation-delay: 1s;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .bubble-3 {
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 2s;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @media (max-width: 576px) {
+        .chat-card {
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .features {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-bubble {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-wrapper">
+    <!-- Floating chat bubbles -->
+    <div class="chat-bubble bubble-1">
+        <i class="fas fa-comment"></i>
+    </div>
+    <div class="chat-bubble bubble-2">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chat-bubble bubble-3">
+        <i class="fas fa-reply"></i>
+    </div>
+
+    <!-- Main Card -->
+    <div class="chat-card">
+        <div class="card-header">
+            <h2><i class="fas fa-comments me-2"></i>Join the Conversation</h2>
+            <p class="mb-0">Enter your details to start chatting</p>
+        </div>
+
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <!-- Username Field -->
+                <div class="mb-4">
+                    <label for="username" class="form-label">USERNAME</label>
+                    <div class="position-relative">
+                        <i class="fas fa-user form-icon"></i>
+                        <input type="text" id="username" name="username" class="form-control" required placeholder="Enter your username">
+                    </div>
+                </div>
+
+                <!-- Room Name Field -->
+                <div class="mb-4">
+                    <label for="room" class="form-label">ROOM NAME</label>
+                    <div class="position-relative">
+                        <i class="fas fa-hashtag form-icon"></i>
+                        <input type="text" id="room" name="room" class="form-control" required placeholder="Enter room name">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-submit w-100">
+                    <i class="fas fa-paper-plane me-2"></i>JOIN CHAT ROOM
+                </button>
+            </form>
+
+            <!-- Features Section -->
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="feature-text">Secure Connection</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-text">Real-time</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-text">Group Chats</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Prevent form resubmission on page refresh
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+{% endblock %}
